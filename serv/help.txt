@@ -1,0 +1,8 @@
+-- Message privé -- 
+/msg PSEUDO TEXTE : Envoie un message uniquement à la personne dont le pseudo est spécifié
+-- Chaines --
+/chaine create NOMCHAINE NBMAXCLIENTS DESCRIPTION : Créé une nouvelle chaine
+/chaine join NOMCHAINE : Permet de se connecter à une chaine
+/chaine modify NOMCHAINE NouveauNOMCHAINE NBMAXCLIENTS DESCRIPTION : Modifie une chaine
+/chaine delete NOMCHAINE : Supprime la chaine
+/chaine list : Permet de lister toutes les chaînes disponibles
