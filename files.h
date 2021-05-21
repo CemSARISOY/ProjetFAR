@@ -1,3 +1,16 @@
+/**
+ * \file files.h
+ * \brief Header files
+ * \author 
+ * \version 0.1
+ * \date 21 Mai 2021
+ *
+ * Header contenant des fonctions utilisées par le serveur et le client
+ *
+ */
+
+
+
 /** 
   * @brief Procédure récupérant un fichier à travers une socket, le fichier est créé s'il n'existe pas et est modifié 
   *

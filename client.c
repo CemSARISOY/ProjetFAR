@@ -1,3 +1,15 @@
+/**
+ * \file client.c
+ * \brief Programme du client
+ * \author 
+ * \version 0.1
+ * \date 21 Mai 2021
+ *
+ * Programme du client
+ *
+ */
+
+
 #include <stdio.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -9,7 +21,7 @@
 #include <signal.h>
 #include <dirent.h>
 #include <limits.h>
-#include "shared.h"
+#include "files.h"
 #define MSGSIZE 1024
 
 // Structures pour envoyer plusieurs variables aux threads

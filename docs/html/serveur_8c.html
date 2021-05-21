@@ -1,0 +1,1025 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Projet FAR: Référence du fichier serveur.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Projet FAR
+   </div>
+   <div id="projectbrief">Projet réalisé par Zahra AHLAL, Afaf BENTOUIL, Cem SARISOY</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Fonctions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence du fichier serveur.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Programme du serveur.  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;sys/socket.h&gt;</code><br />
+<code>#include &lt;arpa/inet.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;strings.h&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &lt;pthread.h&gt;</code><br />
+<code>#include &lt;semaphore.h&gt;</code><br />
+<code>#include &lt;dirent.h&gt;</code><br />
+<code>#include &lt;signal.h&gt;</code><br />
+<code>#include &lt;limits.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="files_8h_source.html">files.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de serveur.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="serveur_8c__incl.png" border="0" usemap="#serveur_8c" alt=""/></div>
+<!-- MAP 0 -->
+</div>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structinfoClients.html">infoClients</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structclient.html">client</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structchaine.html">chaine</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a57332b76331a1bbe1d6807ddbb6d0522"><td class="memItemLeft" align="right" valign="top"><a id="a57332b76331a1bbe1d6807ddbb6d0522"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MSGSIZE</b>&#160;&#160;&#160;1024</td></tr>
+<tr class="separator:a57332b76331a1bbe1d6807ddbb6d0522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a244603d0dfe63d4f089aed9400721f5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#a244603d0dfe63d4f089aed9400721f5c">findClientByPseudo</a> (char *pseudo, int *i, int *j)</td></tr>
+<tr class="memdesc:a244603d0dfe63d4f089aed9400721f5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">procedure qui cherche la position du client sur le serveur (chaines) grâce à son pseudo, elle modifie i et j (si i == nbdechaines alors client non trouvé)  <a href="serveur_8c.html#a244603d0dfe63d4f089aed9400721f5c">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a244603d0dfe63d4f089aed9400721f5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6c4679ec5d6296b5f5dd1364dc5312e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#ae6c4679ec5d6296b5f5dd1364dc5312e">findClientBySocket</a> (int dS, int *i, int *j)</td></tr>
+<tr class="memdesc:ae6c4679ec5d6296b5f5dd1364dc5312e"><td class="mdescLeft">&#160;</td><td class="mdescRight">procedure qui cherche la position du client sur le serveur (chaines) grâce à sa socket, elle modifi i et j (si i == nbdechaines alors client non trouvé)  <a href="serveur_8c.html#ae6c4679ec5d6296b5f5dd1364dc5312e">Plus de détails...</a><br /></td></tr>
+<tr class="separator:ae6c4679ec5d6296b5f5dd1364dc5312e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea0c11d6b2b1e5e80587d95711186d47"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#aea0c11d6b2b1e5e80587d95711186d47">creationSocket</a> (int port)</td></tr>
+<tr class="memdesc:aea0c11d6b2b1e5e80587d95711186d47"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction permettant la création de la socket serveur  <a href="serveur_8c.html#aea0c11d6b2b1e5e80587d95711186d47">Plus de détails...</a><br /></td></tr>
+<tr class="separator:aea0c11d6b2b1e5e80587d95711186d47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74c254b678eabcbcfaf5a57df0606f11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#a74c254b678eabcbcfaf5a57df0606f11">deconnexion</a> (int dsC, int force, pthread_t thread)</td></tr>
+<tr class="memdesc:a74c254b678eabcbcfaf5a57df0606f11"><td class="mdescLeft">&#160;</td><td class="mdescRight">procédure déconnectant un client et terminant le thread  <a href="serveur_8c.html#a74c254b678eabcbcfaf5a57df0606f11">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a74c254b678eabcbcfaf5a57df0606f11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05906c0377a0c2070d7c082af0625f3e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#a05906c0377a0c2070d7c082af0625f3e">connexionCompte</a> (int dsC)</td></tr>
+<tr class="memdesc:a05906c0377a0c2070d7c082af0625f3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui connecte le client à son propre compte.  <a href="serveur_8c.html#a05906c0377a0c2070d7c082af0625f3e">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a05906c0377a0c2070d7c082af0625f3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ba5b173e2694e7e954900ffcf11514c"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#a8ba5b173e2694e7e954900ffcf11514c">choixPseudo</a> (int dsC, pthread_t thread)</td></tr>
+<tr class="memdesc:a8ba5b173e2694e7e954900ffcf11514c"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction permettant à un client d'entrer un pseudo et le stocker  <a href="serveur_8c.html#a8ba5b173e2694e7e954900ffcf11514c">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a8ba5b173e2694e7e954900ffcf11514c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78372a27c61f3e869366ee0efbfc16b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#a78372a27c61f3e869366ee0efbfc16b2">creationChaine</a> (char *msg, int dS)</td></tr>
+<tr class="memdesc:a78372a27c61f3e869366ee0efbfc16b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">procédure créant une chaine  <a href="serveur_8c.html#a78372a27c61f3e869366ee0efbfc16b2">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a78372a27c61f3e869366ee0efbfc16b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1780602fa33c4a6b561c94e8ceedb4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#ab1780602fa33c4a6b561c94e8ceedb4c">connexionChaine</a> (char *msg, int dS)</td></tr>
+<tr class="memdesc:ab1780602fa33c4a6b561c94e8ceedb4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procédure connectant le client à une chaine.  <a href="serveur_8c.html#ab1780602fa33c4a6b561c94e8ceedb4c">Plus de détails...</a><br /></td></tr>
+<tr class="separator:ab1780602fa33c4a6b561c94e8ceedb4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81d620a5312fc20069353f8ebdfd89f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#a81d620a5312fc20069353f8ebdfd89f1">listerChaine</a> (int dS)</td></tr>
+<tr class="memdesc:a81d620a5312fc20069353f8ebdfd89f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">procédure listant toutes les chaines au client  <a href="serveur_8c.html#a81d620a5312fc20069353f8ebdfd89f1">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a81d620a5312fc20069353f8ebdfd89f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15b71cf513aae616fc26905c77341176"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#a15b71cf513aae616fc26905c77341176">deleteChaine</a> (char *msg, int dS)</td></tr>
+<tr class="memdesc:a15b71cf513aae616fc26905c77341176"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procédure supprimant une chaine et qui déplace tous les clients de cette chaine au home.  <a href="serveur_8c.html#a15b71cf513aae616fc26905c77341176">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a15b71cf513aae616fc26905c77341176"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e6b9630f4d846a3028c12f38d4a876f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#a8e6b9630f4d846a3028c12f38d4a876f">modifierChaine</a> (char *msg, int dS)</td></tr>
+<tr class="memdesc:a8e6b9630f4d846a3028c12f38d4a876f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procédure modifiant une chaine.  <a href="serveur_8c.html#a8e6b9630f4d846a3028c12f38d4a876f">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a8e6b9630f4d846a3028c12f38d4a876f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a126a3844a6e7c1798114566441f8110d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#a126a3844a6e7c1798114566441f8110d">affichageManuelUtilisateur</a> (int dS)</td></tr>
+<tr class="memdesc:a126a3844a6e7c1798114566441f8110d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procédure affichant la liste des commandes au client.  <a href="serveur_8c.html#a126a3844a6e7c1798114566441f8110d">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a126a3844a6e7c1798114566441f8110d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb9a51ecc5e62671e214b688a0c43352"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#aeb9a51ecc5e62671e214b688a0c43352">traitement</a> (char *action, char *msg)</td></tr>
+<tr class="memdesc:aeb9a51ecc5e62671e214b688a0c43352"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui traite les actions saisies par le client  <a href="serveur_8c.html#aeb9a51ecc5e62671e214b688a0c43352">Plus de détails...</a><br /></td></tr>
+<tr class="separator:aeb9a51ecc5e62671e214b688a0c43352"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84ab4d8293ec1043b1d8d212ee339ff3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#a84ab4d8293ec1043b1d8d212ee339ff3">messagesPrives</a> (int dsC, char *msg, char *pseudo)</td></tr>
+<tr class="memdesc:a84ab4d8293ec1043b1d8d212ee339ff3"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui traite et envoie les messages privés  <a href="serveur_8c.html#a84ab4d8293ec1043b1d8d212ee339ff3">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a84ab4d8293ec1043b1d8d212ee339ff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae261cd43238b567995415c0df5edb469"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#ae261cd43238b567995415c0df5edb469">broadcast</a> (int dsC, char *msg, char *pseudo)</td></tr>
+<tr class="memdesc:ae261cd43238b567995415c0df5edb469"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui traite et envoie les messages à tout le monde (ALL)  <a href="serveur_8c.html#ae261cd43238b567995415c0df5edb469">Plus de détails...</a><br /></td></tr>
+<tr class="separator:ae261cd43238b567995415c0df5edb469"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac611d16f5273094fd610be6b10567b25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#ac611d16f5273094fd610be6b10567b25">relayageMessage</a> (int dsC, char *pseudo, char *action, char *msg)</td></tr>
+<tr class="memdesc:ac611d16f5273094fd610be6b10567b25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procédure qui traite le message du client et lance la bonne action demandée.  <a href="serveur_8c.html#ac611d16f5273094fd610be6b10567b25">Plus de détails...</a><br /></td></tr>
+<tr class="separator:ac611d16f5273094fd610be6b10567b25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02d59ad20d6aaca3db4cf14cd0d1e391"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#a02d59ad20d6aaca3db4cf14cd0d1e391">transmettreMessage</a> (void *s)</td></tr>
+<tr class="memdesc:a02d59ad20d6aaca3db4cf14cd0d1e391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction du thread message créé pour chaque client, qui permet de transmettre le message envoyé par le client écouté par le thread aux destinataires.  <a href="serveur_8c.html#a02d59ad20d6aaca3db4cf14cd0d1e391">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a02d59ad20d6aaca3db4cf14cd0d1e391"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3c598cdc7c8f2f9994559622db6e615"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#ae3c598cdc7c8f2f9994559622db6e615">acceptClients</a> ()</td></tr>
+<tr class="memdesc:ae3c598cdc7c8f2f9994559622db6e615"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procédure permettant la connexion entre clients/serveur.  <a href="serveur_8c.html#ae3c598cdc7c8f2f9994559622db6e615">Plus de détails...</a><br /></td></tr>
+<tr class="separator:ae3c598cdc7c8f2f9994559622db6e615"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2206f9e272f9cce931f1e6122a90aaba"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#a2206f9e272f9cce931f1e6122a90aaba">receptionFichier</a> (void *s)</td></tr>
+<tr class="memdesc:a2206f9e272f9cce931f1e6122a90aaba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procedure executée par un thread pour recevoir et stocker un fichier depuis le client.  <a href="serveur_8c.html#a2206f9e272f9cce931f1e6122a90aaba">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a2206f9e272f9cce931f1e6122a90aaba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab70cecd6289cce549435a7cb37046594"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#ab70cecd6289cce549435a7cb37046594">listerFichiers</a> (void *s)</td></tr>
+<tr class="memdesc:ab70cecd6289cce549435a7cb37046594"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procédure executée par un thread pour envoyer la liste des fichiers a un client.  <a href="serveur_8c.html#ab70cecd6289cce549435a7cb37046594">Plus de détails...</a><br /></td></tr>
+<tr class="separator:ab70cecd6289cce549435a7cb37046594"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5748fd699a17741eccc46020bf189d2"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#ae5748fd699a17741eccc46020bf189d2">transmettreFichier</a> (void *s)</td></tr>
+<tr class="memdesc:ae5748fd699a17741eccc46020bf189d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procédure executée par un thread pour envoyer un fichier à un client.  <a href="serveur_8c.html#ae5748fd699a17741eccc46020bf189d2">Plus de détails...</a><br /></td></tr>
+<tr class="separator:ae5748fd699a17741eccc46020bf189d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a7144dcbfb4319ec7dea331edb7f24d"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#a4a7144dcbfb4319ec7dea331edb7f24d">acceptFile</a> (void *s)</td></tr>
+<tr class="memdesc:a4a7144dcbfb4319ec7dea331edb7f24d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procédure executée par le thread attendant une connexion d'un client pour envoyer ou récupérer un fichier.  <a href="serveur_8c.html#a4a7144dcbfb4319ec7dea331edb7f24d">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a4a7144dcbfb4319ec7dea331edb7f24d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ed112523769b21d29372a7e38a62c23"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serveur_8c.html#a2ed112523769b21d29372a7e38a62c23">sigTerm</a> (int code)</td></tr>
+<tr class="memdesc:a2ed112523769b21d29372a7e38a62c23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procédure executé lorsqu'un signal de terminaison est reçu.  <a href="serveur_8c.html#a2ed112523769b21d29372a7e38a62c23">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a2ed112523769b21d29372a7e38a62c23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top"><a id="a0ddf1224851353fc92bfbff6f499fa97"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, char *argv[])</td></tr>
+<tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a76f11d9a0a47b94f72c2d0e77fb32240"><td class="memItemLeft" align="right" valign="top"><a id="a76f11d9a0a47b94f72c2d0e77fb32240"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>n</b></td></tr>
+<tr class="separator:a76f11d9a0a47b94f72c2d0e77fb32240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93a4d6732b3d6380dc3a9647b2620d1b"><td class="memItemLeft" align="right" valign="top"><a id="a93a4d6732b3d6380dc3a9647b2620d1b"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>nChaines</b></td></tr>
+<tr class="separator:a93a4d6732b3d6380dc3a9647b2620d1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82f8d4d672c42b0d13102898292e2425"><td class="memItemLeft" align="right" valign="top"><a id="a82f8d4d672c42b0d13102898292e2425"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>dSMsg</b></td></tr>
+<tr class="separator:a82f8d4d672c42b0d13102898292e2425"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e380bf8222345de904a8c089d42eb24"><td class="memItemLeft" align="right" valign="top"><a id="a1e380bf8222345de904a8c089d42eb24"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>dSFile</b></td></tr>
+<tr class="separator:a1e380bf8222345de904a8c089d42eb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a637ff771011f815b0aa8e27eb7574f29"><td class="memItemLeft" align="right" valign="top"><a id="a637ff771011f815b0aa8e27eb7574f29"></a>
+pthread_t *&#160;</td><td class="memItemRight" valign="bottom"><b>threadsFini</b></td></tr>
+<tr class="separator:a637ff771011f815b0aa8e27eb7574f29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3c270bc15b944b8f60824ba6e0f6417"><td class="memItemLeft" align="right" valign="top"><a id="ac3c270bc15b944b8f60824ba6e0f6417"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>nbThreadsFini</b></td></tr>
+<tr class="separator:ac3c270bc15b944b8f60824ba6e0f6417"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a595de88724cbdcbb05c33fcbd0866b14"><td class="memItemLeft" align="right" valign="top"><a id="a595de88724cbdcbb05c33fcbd0866b14"></a>
+pthread_t *&#160;</td><td class="memItemRight" valign="bottom"><b>threadsExec</b></td></tr>
+<tr class="separator:a595de88724cbdcbb05c33fcbd0866b14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e3126a00b4405e07a95e88240eb372b"><td class="memItemLeft" align="right" valign="top"><a id="a8e3126a00b4405e07a95e88240eb372b"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>nbThreadsExec</b></td></tr>
+<tr class="separator:a8e3126a00b4405e07a95e88240eb372b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5448f1ce9a0aa9f2b1ccb2d0d22d9607"><td class="memItemLeft" align="right" valign="top"><a id="a5448f1ce9a0aa9f2b1ccb2d0d22d9607"></a>
+struct <a class="el" href="structchaine.html">chaine</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>listeChaines</b></td></tr>
+<tr class="separator:a5448f1ce9a0aa9f2b1ccb2d0d22d9607"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4acff8232e4aec9cd5c6dc200ac55ef3"><td class="memItemLeft" align="right" valign="top"><a id="a4acff8232e4aec9cd5c6dc200ac55ef3"></a>
+pthread_mutex_t&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b> = PTHREAD_MUTEX_INITIALIZER</td></tr>
+<tr class="separator:a4acff8232e4aec9cd5c6dc200ac55ef3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ff0674f27e351d3883d96ce35eacdc6"><td class="memItemLeft" align="right" valign="top"><a id="a0ff0674f27e351d3883d96ce35eacdc6"></a>
+pthread_mutex_t&#160;</td><td class="memItemRight" valign="bottom"><b>mutexThreads</b> = PTHREAD_MUTEX_INITIALIZER</td></tr>
+<tr class="separator:a0ff0674f27e351d3883d96ce35eacdc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7de5a8f671f9b5c6c538e6ee274f2d80"><td class="memItemLeft" align="right" valign="top"><a id="a7de5a8f671f9b5c6c538e6ee274f2d80"></a>
+sem_t&#160;</td><td class="memItemRight" valign="bottom"><b>semaphore</b></td></tr>
+<tr class="separator:a7de5a8f671f9b5c6c538e6ee274f2d80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a591feae97da1104fdf48d6460b74542d"><td class="memItemLeft" align="right" valign="top"><a id="a591feae97da1104fdf48d6460b74542d"></a>
+sem_t&#160;</td><td class="memItemRight" valign="bottom"><b>semaphoreFile</b></td></tr>
+<tr class="separator:a591feae97da1104fdf48d6460b74542d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Programme du serveur. </p>
+<dl class="section author"><dt>Auteur</dt><dd></dd></dl>
+<dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>21 Mai 2021</dd></dl>
+<p>Programme du serveur </p>
+</div><h2 class="groupheader">Documentation des fonctions</h2>
+<a id="ae3c598cdc7c8f2f9994559622db6e615"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3c598cdc7c8f2f9994559622db6e615">&#9670;&nbsp;</a></span>acceptClients()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void acceptClients </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Procédure permettant la connexion entre clients/serveur. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dS</td><td>Descripteur de la socket sur laquelle attendre les connexions des clients </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4a7144dcbfb4319ec7dea331edb7f24d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a7144dcbfb4319ec7dea331edb7f24d">&#9670;&nbsp;</a></span>acceptFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* acceptFile </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Procédure executée par le thread attendant une connexion d'un client pour envoyer ou récupérer un fichier. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Pointeur vers le descripteur de la socket sur laquelle attendre un fichier client </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a126a3844a6e7c1798114566441f8110d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a126a3844a6e7c1798114566441f8110d">&#9670;&nbsp;</a></span>affichageManuelUtilisateur()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void affichageManuelUtilisateur </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dS</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Procédure affichant la liste des commandes au client. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dS</td><td>Descripteur de la socket du client souhaitant la liste des commandes </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae261cd43238b567995415c0df5edb469"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae261cd43238b567995415c0df5edb469">&#9670;&nbsp;</a></span>broadcast()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void broadcast </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dsC</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pseudo</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui traite et envoie les messages à tout le monde (ALL) </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dsC</td><td>Descripteur socket du client envoyant le message </td></tr>
+    <tr><td class="paramname">msg</td><td>message qui doit être traité </td></tr>
+    <tr><td class="paramname">pseudo</td><td>pseudo du client qui envoie le message </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8ba5b173e2694e7e954900ffcf11514c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ba5b173e2694e7e954900ffcf11514c">&#9670;&nbsp;</a></span>choixPseudo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* choixPseudo </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dsC</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pthread_t&#160;</td>
+          <td class="paramname"><em>thread</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction permettant à un client d'entrer un pseudo et le stocker </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dsC</td><td>Descripteur socket du client entrant son pseudo </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>le pseudo du client (stocké côté serveur si validé) </dd></dl>
+
+</div>
+</div>
+<a id="ab1780602fa33c4a6b561c94e8ceedb4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1780602fa33c4a6b561c94e8ceedb4c">&#9670;&nbsp;</a></span>connexionChaine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void connexionChaine </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dS</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Procédure connectant le client à une chaine. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>Nom de la chaine </td></tr>
+    <tr><td class="paramname">dS</td><td>Descripteur de la socket du client voulant se connecter à la chaine </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a05906c0377a0c2070d7c082af0625f3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05906c0377a0c2070d7c082af0625f3e">&#9670;&nbsp;</a></span>connexionCompte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int connexionCompte </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dsC</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui connecte le client à son propre compte. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dsC</td><td>Descripteur socket du client entrant son pseudo </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>-1 si le client n'a pas réussi à se connecter, 0 sinon </dd></dl>
+
+</div>
+</div>
+<a id="a78372a27c61f3e869366ee0efbfc16b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78372a27c61f3e869366ee0efbfc16b2">&#9670;&nbsp;</a></span>creationChaine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void creationChaine </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dS</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>procédure créant une chaine </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>Informations de la chaine (format : nom nbMax description) </td></tr>
+    <tr><td class="paramname">dS</td><td>Descripteur de la socket du créateur de la chaine pour lui envoyer un message de retour </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aea0c11d6b2b1e5e80587d95711186d47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea0c11d6b2b1e5e80587d95711186d47">&#9670;&nbsp;</a></span>creationSocket()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int creationSocket </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>port</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction permettant la création de la socket serveur </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>Port sur lequel la socket sera créée </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>le descripteur de la socket </dd></dl>
+
+</div>
+</div>
+<a id="a74c254b678eabcbcfaf5a57df0606f11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74c254b678eabcbcfaf5a57df0606f11">&#9670;&nbsp;</a></span>deconnexion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void deconnexion </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dsC</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>force</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pthread_t&#160;</td>
+          <td class="paramname"><em>thread</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>procédure déconnectant un client et terminant le thread </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dsC</td><td>Descripteur socket du client à déconnecter </td></tr>
+    <tr><td class="paramname">force</td><td>Variable permettant si l'on doit forcer la déconnexion (c'est à dire sans toucher aux pseudos) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a15b71cf513aae616fc26905c77341176"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15b71cf513aae616fc26905c77341176">&#9670;&nbsp;</a></span>deleteChaine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void deleteChaine </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dS</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Procédure supprimant une chaine et qui déplace tous les clients de cette chaine au home. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>Nom de la chaine à supprimer </td></tr>
+    <tr><td class="paramname">dS</td><td>Descripteur de la socket du client voulant supprimer la chaine pour lui envoyer un retour </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a244603d0dfe63d4f089aed9400721f5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a244603d0dfe63d4f089aed9400721f5c">&#9670;&nbsp;</a></span>findClientByPseudo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void findClientByPseudo </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pseudo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>procedure qui cherche la position du client sur le serveur (chaines) grâce à son pseudo, elle modifie i et j (si i == nbdechaines alors client non trouvé) </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pseudo</td><td>Pseudo du client </td></tr>
+    <tr><td class="paramname">i</td><td>Entier à modifier pour indiquer la position de la chaine dans laquelle le client est </td></tr>
+    <tr><td class="paramname">j</td><td>Entier à modifier pour indiquer la position du client dans la chaine </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae6c4679ec5d6296b5f5dd1364dc5312e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6c4679ec5d6296b5f5dd1364dc5312e">&#9670;&nbsp;</a></span>findClientBySocket()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void findClientBySocket </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dS</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>procedure qui cherche la position du client sur le serveur (chaines) grâce à sa socket, elle modifi i et j (si i == nbdechaines alors client non trouvé) </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dS</td><td>Descripteur de la socket du client </td></tr>
+    <tr><td class="paramname">i</td><td>Entier à modifier pour indiquer la position de la chaine dans laquelle le client est </td></tr>
+    <tr><td class="paramname">j</td><td>Entier à modifier pour indiquer la position du client dans la chaine </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a81d620a5312fc20069353f8ebdfd89f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81d620a5312fc20069353f8ebdfd89f1">&#9670;&nbsp;</a></span>listerChaine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void listerChaine </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dS</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>procédure listant toutes les chaines au client </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dS</td><td>Descripteur de la socket du client auquel envoyer la liste </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab70cecd6289cce549435a7cb37046594"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab70cecd6289cce549435a7cb37046594">&#9670;&nbsp;</a></span>listerFichiers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* listerFichiers </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Procédure executée par un thread pour envoyer la liste des fichiers a un client. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Pointeur vers le descripteur de la socket sur laquelle envoyer la liste </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a84ab4d8293ec1043b1d8d212ee339ff3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84ab4d8293ec1043b1d8d212ee339ff3">&#9670;&nbsp;</a></span>messagesPrives()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void messagesPrives </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dsC</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pseudo</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui traite et envoie les messages privés </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dsC</td><td>Descripteur socket du client envoyant le message </td></tr>
+    <tr><td class="paramname">msg</td><td>message qui doit êtretraité </td></tr>
+    <tr><td class="paramname">pseudo</td><td>pseudo du client qui envoie le messa </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8e6b9630f4d846a3028c12f38d4a876f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e6b9630f4d846a3028c12f38d4a876f">&#9670;&nbsp;</a></span>modifierChaine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void modifierChaine </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dS</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Procédure modifiant une chaine. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>Informations de la chaine (format : chaineAModifier nouveauNom nouveauNbMax nouvelleDescription) </td></tr>
+    <tr><td class="paramname">dS</td><td>Descripteur de la socket du client voulant modifier la chaine pour lui envoyer un retour </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2206f9e272f9cce931f1e6122a90aaba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2206f9e272f9cce931f1e6122a90aaba">&#9670;&nbsp;</a></span>receptionFichier()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* receptionFichier </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Procedure executée par un thread pour recevoir et stocker un fichier depuis le client. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Pointeur vers le descripteur de la socket sur laquelle récupérer le fichier </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac611d16f5273094fd610be6b10567b25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac611d16f5273094fd610be6b10567b25">&#9670;&nbsp;</a></span>relayageMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void relayageMessage </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dsC</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pseudo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>action</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>msg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Procédure qui traite le message du client et lance la bonne action demandée. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dsC</td><td>Descripteur socket du client envoyant le message </td></tr>
+    <tr><td class="paramname">pseudo</td><td>Pseudo de l'émetteur du message </td></tr>
+    <tr><td class="paramname">action</td><td>Action à effectuer (privé, chaine, ...) </td></tr>
+    <tr><td class="paramname">msg</td><td>Message à envoyer aux autres clients </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2ed112523769b21d29372a7e38a62c23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ed112523769b21d29372a7e38a62c23">&#9670;&nbsp;</a></span>sigTerm()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sigTerm </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>code</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Procédure executé lorsqu'un signal de terminaison est reçu. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">code</td><td>Code du signal reçu </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeb9a51ecc5e62671e214b688a0c43352"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb9a51ecc5e62671e214b688a0c43352">&#9670;&nbsp;</a></span>traitement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int traitement </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>action</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>msg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui traite les actions saisies par le client </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">action&amp;nbsp;variable</td><td>qui contient le choix du client </td></tr>
+    <tr><td class="paramname">msg</td><td>message qui accompagne l'action </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>un entier qui represente l'action choisie </dd></dl>
+
+</div>
+</div>
+<a id="ae5748fd699a17741eccc46020bf189d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5748fd699a17741eccc46020bf189d2">&#9670;&nbsp;</a></span>transmettreFichier()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* transmettreFichier </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Procédure executée par un thread pour envoyer un fichier à un client. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Pointeur vers le descripteur de la socket sur laquelle envoyer le fichier </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a02d59ad20d6aaca3db4cf14cd0d1e391"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02d59ad20d6aaca3db4cf14cd0d1e391">&#9670;&nbsp;</a></span>transmettreMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* transmettreMessage </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction du thread message créé pour chaque client, qui permet de transmettre le message envoyé par le client écouté par le thread aux destinataires. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>pointeur vers le descripteur de la socket permettant la communication avec le client écouté par le thread </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>La liste des clients est mise à jour et le thread se termine </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

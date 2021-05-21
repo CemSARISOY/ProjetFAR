@@ -1,0 +1,69 @@
+\hypertarget{files_8h}{}\doxysection{Référence du fichier files.\+h}
+\label{files_8h}\index{files.h@{files.h}}
+
+
+Header files.  
+
+
+Ce graphe montre quels fichiers incluent directement ou indirectement ce fichier \+:
+% FIG 0
+\doxysubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{files_8h_a03a288962409ae841c9fef234c8bdfe4}{get\+File}} (F\+I\+LE $\ast$fp, int dS)
+\begin{DoxyCompactList}\small\item\em Procédure récupérant un fichier à travers une socket, le fichier est créé s\textquotesingle{}il n\textquotesingle{}existe pas et est modifié \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{files_8h_ad87176c8ab5b4be3088c89b85920aba5}{send\+File}} (F\+I\+LE $\ast$fp, int dS)
+\begin{DoxyCompactList}\small\item\em procedure envoyant un fichier à travers une socket \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Header files. 
+
+\begin{DoxyAuthor}{Auteur}
+
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+21 Mai 2021
+\end{DoxyDate}
+Header contenant des fonctions utilisées par le serveur et le client 
+
+\doxysubsection{Documentation des fonctions}
+\mbox{\Hypertarget{files_8h_a03a288962409ae841c9fef234c8bdfe4}\label{files_8h_a03a288962409ae841c9fef234c8bdfe4}} 
+\index{files.h@{files.h}!getFile@{getFile}}
+\index{getFile@{getFile}!files.h@{files.h}}
+\doxysubsubsection{\texorpdfstring{getFile()}{getFile()}}
+{\footnotesize\ttfamily void get\+File (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{fp,  }\item[{int}]{dS }\end{DoxyParamCaption})}
+
+
+
+Procédure récupérant un fichier à travers une socket, le fichier est créé s\textquotesingle{}il n\textquotesingle{}existe pas et est modifié 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em fp} & Le descripteur du fichier dans lequel écrire \\
+\hline
+{\em dS} & descripteur de la socket dans laquelle récupérer les informations du fichier \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{files_8h_ad87176c8ab5b4be3088c89b85920aba5}\label{files_8h_ad87176c8ab5b4be3088c89b85920aba5}} 
+\index{files.h@{files.h}!sendFile@{sendFile}}
+\index{sendFile@{sendFile}!files.h@{files.h}}
+\doxysubsubsection{\texorpdfstring{sendFile()}{sendFile()}}
+{\footnotesize\ttfamily void send\+File (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{fp,  }\item[{int}]{dS }\end{DoxyParamCaption})}
+
+
+
+procedure envoyant un fichier à travers une socket 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em fp} & descripteur du fichier dans lequel lire \\
+\hline
+{\em dS} & descripteur de la socket dans laquelle envoyer les informations du fichier \\
+\hline
+{\em j} & Entier à modifier pour indiquer la position du client dans la chaine \\
+\hline
+\end{DoxyParams}

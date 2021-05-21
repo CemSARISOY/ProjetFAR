@@ -1,3 +1,16 @@
+/**
+ * \file serveur.c
+ * \brief Programme du serveur
+ * \author 
+ * \version 0.1
+ * \date 21 Mai 2021
+ *
+ * Programme du serveur
+ *
+ */
+
+
+
 #include <stdio.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -10,7 +23,7 @@
 #include <dirent.h>
 #include <signal.h>
 #include <limits.h>
-#include "shared.h"
+#include "files.h"
 #define MSGSIZE 1024
 
 int n; // Nombre de chaines max

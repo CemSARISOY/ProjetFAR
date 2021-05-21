@@ -1,0 +1,176 @@
+\hypertarget{client_8c}{}\doxysection{Référence du fichier client.\+c}
+\label{client_8c}\index{client.c@{client.c}}
+
+
+Programme du client.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$strings.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include $<$dirent.\+h$>$}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}files.\+h\char`\"{}}\newline
+Graphe des dépendances par inclusion de client.\+c\+:
+% FIG 0
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structdescripteurs}{descripteurs}}
+\item 
+struct \mbox{\hyperlink{structtransfert}{transfert}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{client_8c_a57332b76331a1bbe1d6807ddbb6d0522}\label{client_8c_a57332b76331a1bbe1d6807ddbb6d0522}} 
+\#define {\bfseries M\+S\+G\+S\+I\+ZE}~1024
+\end{DoxyCompactItemize}
+\doxysubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{client_8c_a87e616aeb2171ddc3a37e9ea04c4e475}{creation\+Socket}} (char $\ast$adresse, int port)
+\begin{DoxyCompactList}\small\item\em Fonction permettant la création de socket et la communication au serveur. \end{DoxyCompactList}\item 
+void $\ast$ \mbox{\hyperlink{client_8c_a701e9f29dbb2e88ac78e4b5cab7c870c}{transfert}} (void $\ast$s)
+\begin{DoxyCompactList}\small\item\em Procédure executée par un thread pour envoyer un fichier au serveur. \end{DoxyCompactList}\item 
+void $\ast$ \mbox{\hyperlink{client_8c_aa14fe6d9d740203e3a8c9f8b6854ce2c}{demande\+Liste\+Fic}} (void $\ast$s)
+\begin{DoxyCompactList}\small\item\em Procédure executée par un thread pour demander la liste des fichiers au serveur et l\textquotesingle{}afficher. \end{DoxyCompactList}\item 
+void $\ast$ \mbox{\hyperlink{client_8c_a229f58c183a05d4f0a506879ac0fd5b2}{telecharger}} (void $\ast$s)
+\begin{DoxyCompactList}\small\item\em procédure executée par un thread pour recevoir un fichier depuis le serveur \end{DoxyCompactList}\item 
+void $\ast$ \mbox{\hyperlink{client_8c_a572a6ba0fe559f661c2726e7961b109a}{emission}} (void $\ast$s)
+\begin{DoxyCompactList}\small\item\em procédure du thread permettant l\textquotesingle{}émission d\textquotesingle{}un message vers le serveur \end{DoxyCompactList}\item 
+void $\ast$ \mbox{\hyperlink{client_8c_abe9f8424a2fe2b690dfc51c550fd5e61}{reception}} (void $\ast$s)
+\begin{DoxyCompactList}\small\item\em Procédure du thread permettant à la réception d\textquotesingle{}un message du serveur. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{client_8c_a5b4339bebbf64a540e3303b0a6f74429}{saisi\+Pseudo}} (int dS)
+\begin{DoxyCompactList}\small\item\em Procédure demandant au client un pseudo et le faisant vérifier au serveur. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{client_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{client_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+int {\bfseries main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Programme du client. 
+
+\begin{DoxyAuthor}{Auteur}
+
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+21 Mai 2021
+\end{DoxyDate}
+Programme du client 
+
+\doxysubsection{Documentation des fonctions}
+\mbox{\Hypertarget{client_8c_a87e616aeb2171ddc3a37e9ea04c4e475}\label{client_8c_a87e616aeb2171ddc3a37e9ea04c4e475}} 
+\index{client.c@{client.c}!creationSocket@{creationSocket}}
+\index{creationSocket@{creationSocket}!client.c@{client.c}}
+\doxysubsubsection{\texorpdfstring{creationSocket()}{creationSocket()}}
+{\footnotesize\ttfamily int creation\+Socket (\begin{DoxyParamCaption}\item[{char $\ast$}]{adresse,  }\item[{int}]{port }\end{DoxyParamCaption})}
+
+
+
+Fonction permettant la création de socket et la communication au serveur. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em adresse} & adresse ip du serveur \\
+\hline
+{\em port} & port sur lequel se connecte le serveur \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Retourne le descripteur de la socket 
+\end{DoxyReturn}
+\mbox{\Hypertarget{client_8c_aa14fe6d9d740203e3a8c9f8b6854ce2c}\label{client_8c_aa14fe6d9d740203e3a8c9f8b6854ce2c}} 
+\index{client.c@{client.c}!demandeListeFic@{demandeListeFic}}
+\index{demandeListeFic@{demandeListeFic}!client.c@{client.c}}
+\doxysubsubsection{\texorpdfstring{demandeListeFic()}{demandeListeFic()}}
+{\footnotesize\ttfamily void$\ast$ demande\+Liste\+Fic (\begin{DoxyParamCaption}\item[{void $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Procédure executée par un thread pour demander la liste des fichiers au serveur et l\textquotesingle{}afficher. 
+
+param s Pointeur vers le descripteur de la socket pour les fichiers \mbox{\Hypertarget{client_8c_a572a6ba0fe559f661c2726e7961b109a}\label{client_8c_a572a6ba0fe559f661c2726e7961b109a}} 
+\index{client.c@{client.c}!emission@{emission}}
+\index{emission@{emission}!client.c@{client.c}}
+\doxysubsubsection{\texorpdfstring{emission()}{emission()}}
+{\footnotesize\ttfamily void$\ast$ emission (\begin{DoxyParamCaption}\item[{void $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+procédure du thread permettant l\textquotesingle{}émission d\textquotesingle{}un message vers le serveur 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em s} & pointeur vers le descripteur de la socket permettant la communication avec le serveurr \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{client_8c_abe9f8424a2fe2b690dfc51c550fd5e61}\label{client_8c_abe9f8424a2fe2b690dfc51c550fd5e61}} 
+\index{client.c@{client.c}!reception@{reception}}
+\index{reception@{reception}!client.c@{client.c}}
+\doxysubsubsection{\texorpdfstring{reception()}{reception()}}
+{\footnotesize\ttfamily void$\ast$ reception (\begin{DoxyParamCaption}\item[{void $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Procédure du thread permettant à la réception d\textquotesingle{}un message du serveur. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em s} & pointeur vers le descripteur de la socket permettant la communication avec le serveur \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{client_8c_a5b4339bebbf64a540e3303b0a6f74429}\label{client_8c_a5b4339bebbf64a540e3303b0a6f74429}} 
+\index{client.c@{client.c}!saisiPseudo@{saisiPseudo}}
+\index{saisiPseudo@{saisiPseudo}!client.c@{client.c}}
+\doxysubsubsection{\texorpdfstring{saisiPseudo()}{saisiPseudo()}}
+{\footnotesize\ttfamily void saisi\+Pseudo (\begin{DoxyParamCaption}\item[{int}]{dS }\end{DoxyParamCaption})}
+
+
+
+Procédure demandant au client un pseudo et le faisant vérifier au serveur. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em dS} & Descripteur de la socket du serveur \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{client_8c_a229f58c183a05d4f0a506879ac0fd5b2}\label{client_8c_a229f58c183a05d4f0a506879ac0fd5b2}} 
+\index{client.c@{client.c}!telecharger@{telecharger}}
+\index{telecharger@{telecharger}!client.c@{client.c}}
+\doxysubsubsection{\texorpdfstring{telecharger()}{telecharger()}}
+{\footnotesize\ttfamily void$\ast$ telecharger (\begin{DoxyParamCaption}\item[{void $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+procédure executée par un thread pour recevoir un fichier depuis le serveur 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em s} & Pointeur vers une structure ayant pour informations \+: La socket attendant des fichiers ainsi que le nom du fichier à envoyer \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{client_8c_a701e9f29dbb2e88ac78e4b5cab7c870c}\label{client_8c_a701e9f29dbb2e88ac78e4b5cab7c870c}} 
+\index{client.c@{client.c}!transfert@{transfert}}
+\index{transfert@{transfert}!client.c@{client.c}}
+\doxysubsubsection{\texorpdfstring{transfert()}{transfert()}}
+{\footnotesize\ttfamily void$\ast$ \mbox{\hyperlink{structtransfert}{transfert}} (\begin{DoxyParamCaption}\item[{void $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Procédure executée par un thread pour envoyer un fichier au serveur. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em s} & Pointeur vers une structure ayant pour informations \+: La socket attendant des fichiers ainsi que le nom du fichier à envoyer \\
+\hline
+\end{DoxyParams}
