@@ -1,8 +1,13 @@
--- Message privé -- 
+-- Global -- 
 /msg PSEUDO TEXTE : Envoie un message uniquement à la personne dont le pseudo est spécifié
+/liste : Recevoir la liste des clients connectés sur le serveur
 -- Chaines --
 /chaine create NOMCHAINE NBMAXCLIENTS DESCRIPTION : Créé une nouvelle chaine
 /chaine join NOMCHAINE : Permet de se connecter à une chaine
 /chaine modify NOMCHAINE NouveauNOMCHAINE NBMAXCLIENTS DESCRIPTION : Modifie une chaine
 /chaine delete NOMCHAINE : Supprime la chaine
 /chaine list : Permet de lister toutes les chaînes disponibles
+-- Fichiers --
+/file NOMFICHIER : Envoie le fichier au serveur
+/file list : Permet de lister tous les fichiers disponibles sur le serveur
+/file get NOMFICHIER : Télécharge le fichier depuis le serveur
