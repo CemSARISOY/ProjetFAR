@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['infoclients_41',['infoClients',['../structinfoClients.html',1,'']]]
+  ['infoclients_44',['infoClients',['../structinfoClients.html',1,'']]]
 ];

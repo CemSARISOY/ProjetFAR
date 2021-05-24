@@ -3,7 +3,7 @@
  * \brief Programme du client
  * \author 
  * \version 0.1
- * \date 21 Mai 2021
+ * \date 24 Mai 2021
  *
  * Programme du client
  *
@@ -90,7 +90,7 @@ void *transfert(void *s){
     FILE * fp;
     fp = fopen(nomFic, "r");
     if(fp == NULL){
-        perror("Fichier inexistant");
+        puts("Fichier inexistant");
     }else{
         send(dS, nomFic, MSGSIZE, 0);
         sendFile(fp, dS);
@@ -135,8 +135,7 @@ void *telecharger(void *s){
     // créer le fichier avec le meme nom
     FILE *fp = fopen(nomFic, "w+");
     if(fp == NULL){
-        perror("fichier");
-        exit(1);
+        puts("Problème fichier");
     }else{
         getFile(fp, dS);
 
@@ -254,7 +253,7 @@ void saisiPseudo(int dS){
     int reponse = 1;
     char pseudo[20];
     while(reponse == 1){
-        printf("Veuillez saisir votre pseudo :\n");
+        printf("\033[36mVeuillez saisir votre pseudo :\033[00m\n");
         fgets(pseudo,20,stdin);
         char *pos = strchr(pseudo, '\n');
         *pos = '\0';
@@ -268,22 +267,57 @@ void saisiPseudo(int dS){
             exit(1);
         }
 
-        if(reponse == 1) printf("Pseudo refusé par le serveur\n");
+        if(reponse == 1) printf("\033[31mPseudo refusé par le serveur\033[00m\n");
 
     }
-    printf("Welcome %s\n", pseudo);
+    printf("033[33mWelcome\033[00m %s\n", pseudo);
+}
+
+void saisiCompte(int dS){
+    int reponse = 1;
+    char pseudo[20];
+    char mdp[20];
+    fgets(pseudo, 20, stdin);
+    while(reponse == 1){
+        printf("\033[36mVeuillez saisir votre pseudo :\033[00m\n");
+        fgets(pseudo,20,stdin);
+        char *pos = strchr(pseudo, '\n');
+        *pos = '\0';
+        printf("\033[36mVeuillez saisir votre mot de passe :\033[00m\n");
+        fgets(mdp, 20, stdin);
+        pos = strchr(mdp, '\n');
+        *pos = '\0';
+        if(send(dS, pseudo, sizeof(pseudo), 0) <= 0){
+            /*envoi du pseudo au serveur*/
+            perror("Erreur send pseudo");
+            exit(1);
+        }
+        if(send(dS, mdp, sizeof(mdp), 0) <= 0){
+            /*envoi du pseudo au serveur*/
+            perror("Erreur send pseudo");
+            exit(1);
+        }
+        if(recv(dS, &reponse, sizeof(reponse), 0) <= 0 ){
+            perror("Erreur recv pseudo");
+            exit(1);
+        }
+
+        if(reponse == 1) printf("\033[31mIdentifiants refusés par le serveur\033[00m\n");
+
+    }
+    printf("\033[32mWelcome\033[33m %s\033[00m\n", pseudo);
 }
 
 int main(int argc, char *argv[]) {
 	/*vérification bon nombre d'arg*/
     if(argc != 3){
-        perror("Mauvais nombre d'arguments");
+        perror("\033[31mMauvais nombre d'arguments\033[31m");
         exit(1);
     }
 
     /*récuperation création socket*/
     long dS = creationSocket(argv[1], htons(atoi(argv[2])));
-    printf("-- Connexion établie avec le serveur --\n");
+    printf("\033[32m-- Connexion établie avec le serveur --\033[00m\n");
 
     struct descripteurs *desc;
     desc = malloc(sizeof(struct descripteurs));
@@ -291,7 +325,14 @@ int main(int argc, char *argv[]) {
     (*desc).ip = argv[1];
     (*desc).port = atoi(argv[2]);
 
-    saisiPseudo(dS);
+    int choix;
+    do{
+        printf("\033[36mChoix de la connnexion : (1- Connexion, 2- Inscription)\033[00m\n");
+        scanf("%d", &choix);
+    }while(choix != 1 && choix != 2);
+    send(dS, &choix, sizeof(choix), 0);
+
+    saisiCompte(dS);
 
     // Creation des threads
     pthread_t thread[2];
@@ -305,6 +346,6 @@ int main(int argc, char *argv[]) {
     free(desc);
 
 
-    printf("Fin de la communication\n");
+    printf("\033[33mFin de la communication\033[00m\n");
 
 }

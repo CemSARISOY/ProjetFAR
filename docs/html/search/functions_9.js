@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['reception_66',['reception',['../client_8c.html#abe9f8424a2fe2b690dfc51c550fd5e61',1,'client.c']]],
-  ['receptionfichier_67',['receptionFichier',['../serveur_8c.html#a2206f9e272f9cce931f1e6122a90aaba',1,'serveur.c']]],
-  ['relayagemessage_68',['relayageMessage',['../serveur_8c.html#ac611d16f5273094fd610be6b10567b25',1,'serveur.c']]]
+  ['messagesprives_68',['messagesPrives',['../serveur_8c.html#a84ab4d8293ec1043b1d8d212ee339ff3',1,'serveur.c']]],
+  ['modifierchaine_69',['modifierChaine',['../serveur_8c.html#a8e6b9630f4d846a3028c12f38d4a876f',1,'serveur.c']]]
 ];

@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['telecharger_72',['telecharger',['../client_8c.html#a229f58c183a05d4f0a506879ac0fd5b2',1,'client.c']]],
-  ['traitement_73',['traitement',['../serveur_8c.html#aeb9a51ecc5e62671e214b688a0c43352',1,'serveur.c']]],
-  ['transfert_74',['transfert',['../client_8c.html#a701e9f29dbb2e88ac78e4b5cab7c870c',1,'client.c']]],
-  ['transmettrefichier_75',['transmettreFichier',['../serveur_8c.html#ae5748fd699a17741eccc46020bf189d2',1,'serveur.c']]],
-  ['transmettremessage_76',['transmettreMessage',['../serveur_8c.html#a02d59ad20d6aaca3db4cf14cd0d1e391',1,'serveur.c']]]
+  ['saisipseudo_73',['saisiPseudo',['../client_8c.html#a5b4339bebbf64a540e3303b0a6f74429',1,'client.c']]],
+  ['sendfile_74',['sendFile',['../files_8h.html#ad87176c8ab5b4be3088c89b85920aba5',1,'files.h']]],
+  ['sigterm_75',['sigTerm',['../serveur_8c.html#a2ed112523769b21d29372a7e38a62c23',1,'serveur.c']]],
+  ['strcmpupper_76',['strcmpUpper',['../serveur_8c.html#adcd14443c9724333c1329fd9232c497a',1,'serveur.c']]]
 ];

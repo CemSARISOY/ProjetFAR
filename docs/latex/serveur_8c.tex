@@ -17,6 +17,7 @@ Programme du serveur.
 {\ttfamily \#include $<$dirent.\+h$>$}\newline
 {\ttfamily \#include $<$signal.\+h$>$}\newline
 {\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
 {\ttfamily \#include \char`\"{}files.\+h\char`\"{}}\newline
 Graphe des dépendances par inclusion de serveur.\+c\+:
 % FIG 0
@@ -24,11 +25,11 @@ Graphe des dépendances par inclusion de serveur.\+c\+:
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structinfoClients}{info\+Clients}}
-\item 
+\begin{DoxyCompactList}\small\item\em Stockage infos clients. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structclient}{client}}
-\item 
+\begin{DoxyCompactList}\small\item\em Stockage connexion client. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structchaine}{chaine}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Informations d\textquotesingle{}une chaine. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
@@ -46,10 +47,16 @@ int \mbox{\hyperlink{serveur_8c_aea0c11d6b2b1e5e80587d95711186d47}{creation\+Soc
 \begin{DoxyCompactList}\small\item\em fonction permettant la création de la socket serveur \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{serveur_8c_a74c254b678eabcbcfaf5a57df0606f11}{deconnexion}} (int dsC, int force, pthread\+\_\+t thread)
 \begin{DoxyCompactList}\small\item\em procédure déconnectant un client et terminant le thread \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{serveur_8c_a05906c0377a0c2070d7c082af0625f3e}{connexion\+Compte}} (int dsC)
+char $\ast$ \mbox{\hyperlink{serveur_8c_adb4f8a90544b91df1c6e02e857883881}{connexion\+Compte}} (int dsC, pthread\+\_\+t thread)
 \begin{DoxyCompactList}\small\item\em Fonction qui connecte le client à son propre compte. \end{DoxyCompactList}\item 
-char $\ast$ \mbox{\hyperlink{serveur_8c_a8ba5b173e2694e7e954900ffcf11514c}{choix\+Pseudo}} (int dsC, pthread\+\_\+t thread)
-\begin{DoxyCompactList}\small\item\em fonction permettant à un client d\textquotesingle{}entrer un pseudo et le stocker \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{serveur_8c_a6153524ec511bc497bf39e5684d6d72b}{inscription}} (int dsC, pthread\+\_\+t thread)
+\begin{DoxyCompactList}\small\item\em fonction permettant à un client de s\textquotesingle{}inscrire \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{serveur_8c_af9384bf29c41e7d341ff724d86dbb14c}{uppercase}} (char str\mbox{[}256\mbox{]})
+\begin{DoxyCompactList}\small\item\em fonction qui convertie une chaîne en majuscule \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{serveur_8c_adcd14443c9724333c1329fd9232c497a}{strcmp\+Upper}} (char $\ast$str1, char $\ast$str2)
+\begin{DoxyCompactList}\small\item\em fonction qui compare 2 chaines de caractères peu importe des majuscules et minuscules \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{serveur_8c_a632427fa8f8b6ddc936377169043088e}{liste\+Connectes}} (int dS)
+\begin{DoxyCompactList}\small\item\em Procédure envoyant à un client, la liste des clients connectés au serveur. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{serveur_8c_a78372a27c61f3e869366ee0efbfc16b2}{creation\+Chaine}} (char $\ast$msg, int dS)
 \begin{DoxyCompactList}\small\item\em procédure créant une chaine \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{serveur_8c_ab1780602fa33c4a6b561c94e8ceedb4c}{connexion\+Chaine}} (char $\ast$msg, int dS)
@@ -63,7 +70,7 @@ void \mbox{\hyperlink{serveur_8c_a8e6b9630f4d846a3028c12f38d4a876f}{modifier\+Ch
 void \mbox{\hyperlink{serveur_8c_a126a3844a6e7c1798114566441f8110d}{affichage\+Manuel\+Utilisateur}} (int dS)
 \begin{DoxyCompactList}\small\item\em Procédure affichant la liste des commandes au client. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{serveur_8c_aeb9a51ecc5e62671e214b688a0c43352}{traitement}} (char $\ast$action, char $\ast$msg)
-\begin{DoxyCompactList}\small\item\em fonction qui traite les actions saisies par le client \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em fonction qui associe l\textquotesingle{}action saisie par le client à un entier \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{serveur_8c_a84ab4d8293ec1043b1d8d212ee339ff3}{messages\+Prives}} (int dsC, char $\ast$msg, char $\ast$pseudo)
 \begin{DoxyCompactList}\small\item\em fonction qui traite et envoie les messages privés \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{serveur_8c_ae261cd43238b567995415c0df5edb469}{broadcast}} (int dsC, char $\ast$msg, char $\ast$pseudo)
@@ -141,7 +148,7 @@ Programme du serveur.
 0.\+1 
 \end{DoxyVersion}
 \begin{DoxyDate}{Date}
-21 Mai 2021
+24 Mai 2021
 \end{DoxyDate}
 Programme du serveur 
 
@@ -210,24 +217,6 @@ fonction qui traite et envoie les messages à tout le monde (A\+LL)
 {\em pseudo} & pseudo du client qui envoie le message \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{serveur_8c_a8ba5b173e2694e7e954900ffcf11514c}\label{serveur_8c_a8ba5b173e2694e7e954900ffcf11514c}} 
-\index{serveur.c@{serveur.c}!choixPseudo@{choixPseudo}}
-\index{choixPseudo@{choixPseudo}!serveur.c@{serveur.c}}
-\doxysubsubsection{\texorpdfstring{choixPseudo()}{choixPseudo()}}
-{\footnotesize\ttfamily char$\ast$ choix\+Pseudo (\begin{DoxyParamCaption}\item[{int}]{dsC,  }\item[{pthread\+\_\+t}]{thread }\end{DoxyParamCaption})}
-
-
-
-fonction permettant à un client d\textquotesingle{}entrer un pseudo et le stocker 
-
-
-\begin{DoxyParams}{Paramètres}
-{\em dsC} & Descripteur socket du client entrant son pseudo \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Renvoie}
-le pseudo du client (stocké côté serveur si validé) 
-\end{DoxyReturn}
 \mbox{\Hypertarget{serveur_8c_ab1780602fa33c4a6b561c94e8ceedb4c}\label{serveur_8c_ab1780602fa33c4a6b561c94e8ceedb4c}} 
 \index{serveur.c@{serveur.c}!connexionChaine@{connexionChaine}}
 \index{connexionChaine@{connexionChaine}!serveur.c@{serveur.c}}
@@ -245,11 +234,11 @@ Procédure connectant le client à une chaine.
 {\em dS} & Descripteur de la socket du client voulant se connecter à la chaine \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{serveur_8c_a05906c0377a0c2070d7c082af0625f3e}\label{serveur_8c_a05906c0377a0c2070d7c082af0625f3e}} 
+\mbox{\Hypertarget{serveur_8c_adb4f8a90544b91df1c6e02e857883881}\label{serveur_8c_adb4f8a90544b91df1c6e02e857883881}} 
 \index{serveur.c@{serveur.c}!connexionCompte@{connexionCompte}}
 \index{connexionCompte@{connexionCompte}!serveur.c@{serveur.c}}
 \doxysubsubsection{\texorpdfstring{connexionCompte()}{connexionCompte()}}
-{\footnotesize\ttfamily int connexion\+Compte (\begin{DoxyParamCaption}\item[{int}]{dsC }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily char$\ast$ connexion\+Compte (\begin{DoxyParamCaption}\item[{int}]{dsC,  }\item[{pthread\+\_\+t}]{thread }\end{DoxyParamCaption})}
 
 
 
@@ -261,7 +250,7 @@ Fonction qui connecte le client à son propre compte.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Renvoie}
--\/1 si le client n\textquotesingle{}a pas réussi à se connecter, 0 sinon 
+le pseudo du client 
 \end{DoxyReturn}
 \mbox{\Hypertarget{serveur_8c_a78372a27c61f3e869366ee0efbfc16b2}\label{serveur_8c_a78372a27c61f3e869366ee0efbfc16b2}} 
 \index{serveur.c@{serveur.c}!creationChaine@{creationChaine}}
@@ -368,6 +357,39 @@ procedure qui cherche la position du client sur le serveur (chaines) grâce à s
 {\em i} & Entier à modifier pour indiquer la position de la chaine dans laquelle le client est \\
 \hline
 {\em j} & Entier à modifier pour indiquer la position du client dans la chaine \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{serveur_8c_a6153524ec511bc497bf39e5684d6d72b}\label{serveur_8c_a6153524ec511bc497bf39e5684d6d72b}} 
+\index{serveur.c@{serveur.c}!inscription@{inscription}}
+\index{inscription@{inscription}!serveur.c@{serveur.c}}
+\doxysubsubsection{\texorpdfstring{inscription()}{inscription()}}
+{\footnotesize\ttfamily char$\ast$ inscription (\begin{DoxyParamCaption}\item[{int}]{dsC,  }\item[{pthread\+\_\+t}]{thread }\end{DoxyParamCaption})}
+
+
+
+fonction permettant à un client de s\textquotesingle{}inscrire 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em dsC} & Descripteur socket du client \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+le pseudo du client (stocké côté serveur si validé) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{serveur_8c_a632427fa8f8b6ddc936377169043088e}\label{serveur_8c_a632427fa8f8b6ddc936377169043088e}} 
+\index{serveur.c@{serveur.c}!listeConnectes@{listeConnectes}}
+\index{listeConnectes@{listeConnectes}!serveur.c@{serveur.c}}
+\doxysubsubsection{\texorpdfstring{listeConnectes()}{listeConnectes()}}
+{\footnotesize\ttfamily void liste\+Connectes (\begin{DoxyParamCaption}\item[{int}]{dS }\end{DoxyParamCaption})}
+
+
+
+Procédure envoyant à un client, la liste des clients connectés au serveur. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em dS} & descripteur de la socket du client demandant la liste \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{serveur_8c_a81d620a5312fc20069353f8ebdfd89f1}\label{serveur_8c_a81d620a5312fc20069353f8ebdfd89f1}} 
@@ -487,6 +509,26 @@ Procédure executé lorsqu\textquotesingle{}un signal de terminaison est reçu.
 {\em code} & Code du signal reçu \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{serveur_8c_adcd14443c9724333c1329fd9232c497a}\label{serveur_8c_adcd14443c9724333c1329fd9232c497a}} 
+\index{serveur.c@{serveur.c}!strcmpUpper@{strcmpUpper}}
+\index{strcmpUpper@{strcmpUpper}!serveur.c@{serveur.c}}
+\doxysubsubsection{\texorpdfstring{strcmpUpper()}{strcmpUpper()}}
+{\footnotesize\ttfamily int strcmp\+Upper (\begin{DoxyParamCaption}\item[{char $\ast$}]{str1,  }\item[{char $\ast$}]{str2 }\end{DoxyParamCaption})}
+
+
+
+fonction qui compare 2 chaines de caractères peu importe des majuscules et minuscules 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em str1} & chaine de caractères 1 à comparer \\
+\hline
+{\em str2} & chaine de caractères 2 à comparer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+un entier représentant le nombre de caractères différents 
+\end{DoxyReturn}
 \mbox{\Hypertarget{serveur_8c_aeb9a51ecc5e62671e214b688a0c43352}\label{serveur_8c_aeb9a51ecc5e62671e214b688a0c43352}} 
 \index{serveur.c@{serveur.c}!traitement@{traitement}}
 \index{traitement@{traitement}!serveur.c@{serveur.c}}
@@ -495,7 +537,7 @@ Procédure executé lorsqu\textquotesingle{}un signal de terminaison est reçu.
 
 
 
-fonction qui traite les actions saisies par le client 
+fonction qui associe l\textquotesingle{}action saisie par le client à un entier 
 
 
 \begin{DoxyParams}{Paramètres}
@@ -539,4 +581,22 @@ Fonction du thread message créé pour chaque client, qui permet de transmettre 
 \end{DoxyParams}
 \begin{DoxyReturn}{Renvoie}
 La liste des clients est mise à jour et le thread se termine 
+\end{DoxyReturn}
+\mbox{\Hypertarget{serveur_8c_af9384bf29c41e7d341ff724d86dbb14c}\label{serveur_8c_af9384bf29c41e7d341ff724d86dbb14c}} 
+\index{serveur.c@{serveur.c}!uppercase@{uppercase}}
+\index{uppercase@{uppercase}!serveur.c@{serveur.c}}
+\doxysubsubsection{\texorpdfstring{uppercase()}{uppercase()}}
+{\footnotesize\ttfamily char$\ast$ uppercase (\begin{DoxyParamCaption}\item[{char}]{str\mbox{[}256\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+fonction qui convertie une chaîne en majuscule 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em str} & chaine à convertir \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+copie de la chaîne en majuscule 
 \end{DoxyReturn}

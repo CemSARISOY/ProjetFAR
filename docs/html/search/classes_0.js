@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['chaine_38',['chaine',['../structchaine.html',1,'']]],
-  ['client_39',['client',['../structclient.html',1,'']]]
+  ['chaine_41',['chaine',['../structchaine.html',1,'']]],
+  ['client_42',['client',['../structclient.html',1,'']]]
 ];

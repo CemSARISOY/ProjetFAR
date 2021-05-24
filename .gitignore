@@ -4,3 +4,6 @@ serveur
 *.jpg
 *.png
 .vscode
+serv/Chaines.txt
+serv/help.txt
+serv/comptes.txt
