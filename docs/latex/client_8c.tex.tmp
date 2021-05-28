@@ -47,11 +47,8 @@ void $\ast$ \mbox{\hyperlink{client_8c_a572a6ba0fe559f661c2726e7961b109a}{emissi
 \begin{DoxyCompactList}\small\item\em procédure du thread permettant l\textquotesingle{}émission d\textquotesingle{}un message vers le serveur \end{DoxyCompactList}\item 
 void $\ast$ \mbox{\hyperlink{client_8c_abe9f8424a2fe2b690dfc51c550fd5e61}{reception}} (void $\ast$s)
 \begin{DoxyCompactList}\small\item\em Procédure du thread permettant à la réception d\textquotesingle{}un message du serveur. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{client_8c_a5b4339bebbf64a540e3303b0a6f74429}{saisi\+Pseudo}} (int dS)
-\begin{DoxyCompactList}\small\item\em Procédure demandant au client un pseudo et le faisant vérifier au serveur. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{client_8c_ab488c862e919ac2c2da804228424e7bc}\label{client_8c_ab488c862e919ac2c2da804228424e7bc}} 
-void {\bfseries saisi\+Compte} (int dS)
-\item 
+void \mbox{\hyperlink{client_8c_ab488c862e919ac2c2da804228424e7bc}{saisi\+Compte}} (int dS)
+\begin{DoxyCompactList}\small\item\em Procédure demandant au client un pseudo et un mot de passe et le faisant vérifier au serveur. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{client_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{client_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
 int {\bfseries main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
 \end{DoxyCompactItemize}
@@ -67,7 +64,7 @@ Programme du client.
 0.\+1 
 \end{DoxyVersion}
 \begin{DoxyDate}{Date}
-24 Mai 2021
+21 Mai 2021
 \end{DoxyDate}
 Programme du client 
 
@@ -132,15 +129,15 @@ Procédure du thread permettant à la réception d\textquotesingle{}un message d
 {\em s} & pointeur vers le descripteur de la socket permettant la communication avec le serveur \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{client_8c_a5b4339bebbf64a540e3303b0a6f74429}\label{client_8c_a5b4339bebbf64a540e3303b0a6f74429}} 
-\index{client.c@{client.c}!saisiPseudo@{saisiPseudo}}
-\index{saisiPseudo@{saisiPseudo}!client.c@{client.c}}
-\doxysubsubsection{\texorpdfstring{saisiPseudo()}{saisiPseudo()}}
-{\footnotesize\ttfamily void saisi\+Pseudo (\begin{DoxyParamCaption}\item[{int}]{dS }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{client_8c_ab488c862e919ac2c2da804228424e7bc}\label{client_8c_ab488c862e919ac2c2da804228424e7bc}} 
+\index{client.c@{client.c}!saisiCompte@{saisiCompte}}
+\index{saisiCompte@{saisiCompte}!client.c@{client.c}}
+\doxysubsubsection{\texorpdfstring{saisiCompte()}{saisiCompte()}}
+{\footnotesize\ttfamily void saisi\+Compte (\begin{DoxyParamCaption}\item[{int}]{dS }\end{DoxyParamCaption})}
 
 
 
-Procédure demandant au client un pseudo et le faisant vérifier au serveur. 
+Procédure demandant au client un pseudo et un mot de passe et le faisant vérifier au serveur. 
 
 
 \begin{DoxyParams}{Paramètres}

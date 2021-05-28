@@ -3,7 +3,7 @@
  * \brief Programme du serveur
  * \author 
  * \version 0.1
- * \date 24 Mai 2021
+ * \date 21 Mai 2021
  *
  * Programme du serveur
  *
@@ -24,7 +24,7 @@
 #include <dirent.h>
 #include <signal.h>
 #include <limits.h>
-#include<ctype.h>
+#include <ctype.h>
 #include "files.h"
 #define MSGSIZE 1024
 
@@ -224,7 +224,7 @@ char* connexionCompte(int dsC, pthread_t thread){
     int test=1;
     char* nom;
     FILE * fp;
-    
+    int disconnected = 0;
     // Test de l'existence du compte
     do{
         fp = fopen("comptes.txt", "r");
@@ -249,7 +249,11 @@ char* connexionCompte(int dsC, pthread_t thread){
                             }
                         }
                     }
+                }else{
+                    disconnected = 1;
                 }
+            }else{
+                disconnected = 1;
             }
         }
         fclose(fp);
@@ -264,11 +268,16 @@ char* connexionCompte(int dsC, pthread_t thread){
             }
             pthread_mutex_unlock(&mutex);
         }
-        send(dsC, &test, sizeof(test), 0); // Avertissement au client si il est connecté ou non
+        if(disconnected == 0) send(dsC, &test, sizeof(test), 0); // Avertissement au client si il est connecté ou non
 
     }while(test == 1);
+    if(disconnected == 1){
+        free(pseudoEmet);
+        free(mdpEmet);
+        deconnexion(dsC, 1, thread);   
+    }
     printf("\033[32mClient connecté avec le pseudo : %s\033[00m\n",pseudoEmet);
-
+    
     // sauvegarde le client dans le home
     pthread_mutex_lock(&mutex);
     listeChaines[0].listeClients[listeChaines[0].nb].dS = dsC;
@@ -278,6 +287,20 @@ char* connexionCompte(int dsC, pthread_t thread){
     free(mdpEmet);
     return pseudoEmet;
 }
+
+/**
+  *  @brief fonction testant si la chaine de caractère possède un espace
+  *
+  *  @param str la chaine de caracter à tester
+  *  @return 1 si la chaine de caractère possède au moins un espace, 0 sinon
+*/
+int hasSpace(char* str){
+    for(int i = 0; i<strlen(str) ; i++){
+        if(isspace(str[i])) return 1;
+    }
+    return 0;
+}
+
 
 /**
   *  @brief fonction permettant à un client de s'inscrire
@@ -291,6 +314,7 @@ char* inscription(int dsC, pthread_t thread){
     int test = 0;
     char* nom;
     FILE * fp;
+    int disconnected = 0;
     do{
         test = 0;
         fp = fopen("comptes.txt", "r");
@@ -300,24 +324,38 @@ char* inscription(int dsC, pthread_t thread){
         }else{
             char data[MSGSIZE];
             if(recv(dsC, pseudoEmet, 20, 0) > 0){
-                if(recv(dsC, mdpEmet, 20, 0) > 0){
-                    // Test de l'existence du compte dans les fichiers
-                    while(fgets(data, sizeof(data), fp)!= NULL && test==0){
-                        char rec1[20];
-                        strcpy(rec1,strtok(data,";"));
-                        if(strcmp(rec1,pseudoEmet) == 0){
-                            test=1;
+                if(pseudoEmet!=NULL && hasSpace(pseudoEmet) == 0){
+                    if(recv(dsC, mdpEmet, 20, 0) > 0){
+                        if(mdpEmet!=NULL && hasSpace(mdpEmet) == 0){
+                            // Test de l'existence du compte dans les fichiers
+                            while(fgets(data, sizeof(data), fp)!= NULL && test==0){
+                                char rec1[20];
+                                strcpy(rec1,strtok(data,";"));
+                                if(strcmp(rec1,pseudoEmet) == 0){
+                                    test=1;
+                                }
+                            }
                         }
+                        else test=1;
+                    }else{
+                        disconnected = 1;
                     }
                 }
+                else test=1;
+            }else{
+                disconnected = 1;
             }
         }
         fclose(fp);
         
-        send(dsC, &test, sizeof(test), 0);  // Avertissement au client si il est inscrit ou non
+        if(disconnected == 0) send(dsC, &test, sizeof(test), 0);  // Avertissement au client si il est inscrit ou non
 
     }while(test == 1);
-
+    if(disconnected == 1){
+        free(pseudoEmet);
+        free(mdpEmet);
+        deconnexion(dsC, 1, thread);
+    }
     // Création du compte
     fp = fopen("comptes.txt", "a");
     if(fp == NULL){
@@ -351,11 +389,12 @@ char *uppercase( char str[256] ){
 	int i;
 	char* copy = malloc(20);
 
-	for( i = 0; i < strlen(str); i++ ){
+	for( i = 0; i < strlen(str)+1; i++ ){
         copy[i] = toupper(str[i]);	
 	}	
 	return copy;
 }
+
 
 /**
   * @brief fonction qui compare 2 chaines de caractères peu importe des majuscules et minuscules
@@ -383,7 +422,7 @@ void listeConnectes(int dS){
     char str[MSGSIZE];
     strcpy(str, "\033[32m-- Liste des clients connectés --\033[00m\n");
     for(int i = 0; i < nChaines ; i++){
-        strcat(str, "Chaine : ");*
+        strcat(str, "Chaine : ");
         strcat(str, listeChaines[i].nomChaine);
         strcat(str, "\n");
         for(int j = 0 ; j < listeChaines[i].nb; j++){
@@ -413,49 +452,55 @@ void creationChaine(char* msg, int dS){
 
         // Récupération des différentes informations de la chaine
         nomChaine = strtok (msg, " " );
-        nbMax = atoi(strtok (NULL, " " ));
-        description = strtok (NULL, " " );
-        char * desc = strstr(copy, description);
-        char * erreur = "\033[31mCette chaîne a déjà été créée\033[00m";
-        int i = 0;
-        int trouve = 0;
-        while(i<nChaines && trouve!=1){
-            if(strcmpUpper(nomChaine, listeChaines[i].nomChaine) == 0){
-                send(dS, erreur,MSGSIZE,0);
-                trouve=1;
-            }else{
-                i++;
+        if(nomChaine != NULL){
+            char* tok = strtok (NULL, " " );
+            if(tok != NULL){
+                nbMax = atoi(tok);
+                description = strtok (NULL, " " );
+                if(description != NULL){
+                    char * desc = strstr(copy, description);
+                    char * erreur = "\033[31mCette chaîne a déjà été créée\033[00m";
+                    int i = 0;
+                    int trouve = 0;
+                    while(i<nChaines && trouve!=1){
+                        if(strcmpUpper(nomChaine, listeChaines[i].nomChaine) == 0){
+                            send(dS, erreur,MSGSIZE,0);
+                            trouve=1;
+                        }else{
+                            i++;
+                        }
+                    }
+
+                    if(trouve==0){
+                    // Sauvegarde de la chaine sur le serveur
+                    struct chaine nouvelleChaine;
+                    strcpy(nouvelleChaine.nomChaine ,nomChaine);
+                    strcpy(nouvelleChaine.description , desc);
+                    nouvelleChaine.m = nbMax;
+                    nouvelleChaine.nb = 0;
+                    nouvelleChaine.listeClients=malloc(sizeof(struct client)*nouvelleChaine.m);
+
+                    // Sauvegarde de la chaine dans un fichier
+                    FILE *fp = fopen("Chaines.txt", "a+");
+                    if(fp == NULL){
+                        perror("fichier");
+                        exit(1);
+                    }else{
+                        char ligne[MSGSIZE];
+                        sprintf(ligne, "%s;%d;%s\n",nomChaine, nbMax, desc);
+                        fputs(ligne, fp);
+                    }
+                    fclose(fp);
+                    free(copy);
+
+                    listeChaines[nChaines]=nouvelleChaine;
+                    nChaines++;
+
+                    char* created = "\033[32mChaine correctement créée\033[00m";
+                    send(dS, created, MSGSIZE, 0);
+                    }
+                }
             }
-        }
-
-        if(trouve==0){
-          // Sauvegarde de la chaine sur le serveur
-          struct chaine nouvelleChaine;
-          strcpy(nouvelleChaine.nomChaine ,nomChaine);
-          strcpy(nouvelleChaine.description , desc);
-          nouvelleChaine.m = nbMax;
-          nouvelleChaine.nb = 0;
-          nouvelleChaine.listeClients=malloc(sizeof(struct client)*nouvelleChaine.m);
-
-          // Sauvegarde de la chaine dans un fichier
-          FILE *fp = fopen("Chaines.txt", "a+");
-          if(fp == NULL){
-              perror("fichier");
-              exit(1);
-          }else{
-              char ligne[MSGSIZE];
-              sprintf(ligne, "%s;%d;%s\n",nomChaine, nbMax, desc);
-              fputs(ligne, fp);
-          }
-          fclose(fp);
-          free(copy);
-
-          listeChaines[nChaines]=nouvelleChaine;
-          nChaines++;
-
-          char* created = "\033[32mChaine correctement créée\033[00m";
-          send(dS, created, MSGSIZE, 0);
-            
         }
 
         
@@ -475,37 +520,41 @@ void creationChaine(char* msg, int dS){
 */
 void connexionChaine(char *msg,int dS){
     int i=0,trouve=0,k=0,j=0;
-
     // Recherche de la chaine dans laquelle il souhaite se connecter
     while(i<nChaines && trouve!=1){
-        if(strcmp(msg,listeChaines[i].nomChaine) == 0){
+        if(strcmpUpper(msg,listeChaines[i].nomChaine) == 0){
             trouve=1;
         }else{
             i++;
         }
     }
     if(trouve==1){
-        // Recherche de la position du client dans le serveur
-        findClientBySocket(dS, &k, &j);
+        if(listeChaines[i].nb != listeChaines[i].m ){
+            // Recherche de la position du client dans le serveur
+            findClientBySocket(dS, &k, &j);
 
-        // Déplacement du client
-        listeChaines[i].listeClients[listeChaines[i].nb].dS = listeChaines[k].listeClients[j].dS;
-        strcpy(listeChaines[i].listeClients[listeChaines[i].nb].pseudo,listeChaines[k].listeClients[j].pseudo);
-        listeChaines[i].nb++;
-        listeChaines[k].nb--;
-        // Supression dans l'ancienne chaine
-        for(int l = j; l < listeChaines[k].nb ; l++){
-            listeChaines[k].listeClients[l].dS = listeChaines[k].listeClients[l+1].dS;
-            strcpy(listeChaines[k].listeClients[l].pseudo,listeChaines[k].listeClients[l+1].pseudo);
+            // Déplacement du client
+            listeChaines[i].listeClients[listeChaines[i].nb].dS = listeChaines[k].listeClients[j].dS;
+            strcpy(listeChaines[i].listeClients[listeChaines[i].nb].pseudo,listeChaines[k].listeClients[j].pseudo);
+            listeChaines[i].nb++;
+            listeChaines[k].nb--;
+            // Supression dans l'ancienne chaine
+            for(int l = j; l < listeChaines[k].nb ; l++){
+                listeChaines[k].listeClients[l].dS = listeChaines[k].listeClients[l+1].dS;
+                strcpy(listeChaines[k].listeClients[l].pseudo,listeChaines[k].listeClients[l+1].pseudo);
+            }
+
+
+            char* connected = "Connecté à la chaine ";
+            char* connecte = malloc(strlen(connected) + strlen(msg) + 2);
+            strcpy(connecte, connected);
+            strcat(connecte, msg);
+            send(dS, connecte, MSGSIZE, 0);
+            free(connecte);
+        }else{
+            char* connected = "\033[31mLa chaîne est complète !\033[00m";
+            send(dS, connected, MSGSIZE, 0);
         }
-
-
-        char* connected = "Connecté à la chaine ";
-        char* connecte = malloc(strlen(connected) + strlen(msg) + 2);
-        strcpy(connecte, connected);
-        strcat(connecte, msg);
-        send(dS, connecte, MSGSIZE, 0);
-        free(connecte);
     }else{
         char* connected = "\033[31mChaine inexistante\033[00m";
         send(dS, connected, MSGSIZE, 0);
@@ -524,7 +573,8 @@ void listerChaine(int dS) {
     for(int i=0;i<nChaines;i++){
         nom = malloc(strlen(listeChaines[i].nomChaine) + 4 + strlen(listeChaines[i].description));
         sprintf(nom, "%s : %s", listeChaines[i].nomChaine, listeChaines[i].description);
-        send(dS,nom , MSGSIZE, 0);
+        int s=send(dS,nom , MSGSIZE, 0);
+        printf("send : %d\n",s);
         free(nom);
     }
 }
@@ -610,30 +660,37 @@ void modifierChaine(char* msg, int dS){
     if(trouve==1){
         // Récupération des différentes informations et modification
         nouveauNomChaine = strtok (NULL, " " );
-        nbMax = atoi(strtok (NULL, " " ));
-        description = strtok (NULL, " " );
-        char * desc = strstr(copy, description);
+        if(nouveauNomChaine != NULL){
+            char* tok = strtok (NULL, " " );
+            if(tok != NULL){
+                nbMax = atoi(tok);
+                description = strtok (NULL, " " );
+                if(description != NULL){
+                    char * desc = strstr(copy, description);
 
-        strcpy(listeChaines[i].nomChaine ,nouveauNomChaine);
-        strcpy(listeChaines[i].description , desc);
-        listeChaines[i].m = nbMax;
+                    strcpy(listeChaines[i].nomChaine ,nouveauNomChaine);
+                    strcpy(listeChaines[i].description , desc);
+                    listeChaines[i].m = nbMax;
 
-        char* created = "\033[32mChaine correctement modifiée\033[00m";
-        send(dS, created, MSGSIZE, 0);
+                    char* created = "\033[32mChaine correctement modifiée\033[00m";
+                    send(dS, created, MSGSIZE, 0);
 
-        // Modification dans le fichier
-        remove("Chaines.txt");
-        FILE *fp = fopen("Chaines.txt", "a+");
-        if(fp == NULL){
-            perror("fichier");
-            exit(1);
+                    // Modification dans le fichier
+                    remove("Chaines.txt");
+                    FILE *fp = fopen("Chaines.txt", "a+");
+                    if(fp == NULL){
+                        perror("fichier");
+                        exit(1);
+                    }
+                    for(int i = 1; i < nChaines ; i++){
+                        char ligne[MSGSIZE];
+                        sprintf(ligne, "%s;%d;%s\n",listeChaines[i].nomChaine, listeChaines[i].m, listeChaines[i].description);
+                        fputs(ligne, fp);
+                    }
+                    fclose(fp);
+                }
+            }
         }
-        for(int i = 1; i < nChaines ; i++){
-            char ligne[MSGSIZE];
-            sprintf(ligne, "%s;%d;%s\n",listeChaines[i].nomChaine, listeChaines[i].m, listeChaines[i].description);
-            fputs(ligne, fp);
-        }
-        fclose(fp);
     }else{
         char* created = "\033[31mLa chaine à modifier n'a pas été trouvée\033[00m";
         send(dS, created, MSGSIZE, 0);
@@ -781,19 +838,19 @@ void relayageMessage(int dsC, char * pseudo, char* action, char* msg){
             break;
         case 11: // Suppression chaîne
             chaine =  strtok (NULL, " " );
-            deleteChaine(chaine, dsC);
+            if(chaine != NULL) deleteChaine(chaine, dsC);
             break;
         case 12: // Modification chaîne
             chaine =  strtok (NULL, " " );
-            modifierChaine(strstr(msg, chaine), dsC);
+            if(chaine != NULL) modifierChaine(strstr(msg, chaine), dsC);
             break;
         case 13: // Join chaîne
             chaine =  strtok (NULL, " " );
-            connexionChaine(chaine,dsC);
+            if(chaine != NULL) connexionChaine(chaine,dsC);
             break;
         case 14: //Création chaîne
             chaine =  strtok (NULL, " " );
-            creationChaine(strstr(msg, chaine), dsC);
+            if(chaine != NULL) creationChaine(strstr(msg, chaine), dsC);
             break;
         case 2: // help
             affichageManuelUtilisateur(dsC); 
@@ -850,12 +907,12 @@ void *transmettreMessage(void *s){
         strcpy(msgCopy,msg);
         if(msgCopy[0] != ' '){
             char * action = strtok ( msg, " " );
-            relayageMessage(dsC, pseudo,  action, msgCopy);
+            if(action != NULL) relayageMessage(dsC, pseudo,  action, msgCopy);
         }
         else{
             if(strstr(msgCopy," ")!=NULL){
                 char * action = strtok ( msg, " " );
-                relayageMessage(dsC, pseudo,  action, msgCopy);
+                if(action != NULL) relayageMessage(dsC, pseudo,  action, msgCopy);
             }
         }
     }
@@ -931,12 +988,10 @@ void *receptionFichier(void* s){
     FILE *fp = fopen(nomFic, "w+");
     if(fp == NULL){
         perror("fichier");
-        exit(1);
     }else{
         getFile(fp, dsC);
+        fclose(fp);
     }
-
-    fclose(fp);
     sem_post(&semaphoreFile);
     shutdown(dsC, 2);
 
@@ -1018,13 +1073,16 @@ void *transmettreFichier(void *s){
     char nomFic[MSGSIZE];
     recv(dS, &nomFic, sizeof(nomFic), 0);
     FILE * fp;
-    fp = fopen(nomFic, "r");
+    do{
+      fp = fopen(nomFic, "r");
+    }while(fp == NULL);
     if(fp == NULL){
         perror("Fichier inexistant");
     }else{
         sendFile(fp, dS);
+        fclose(fp);
     }
-    fclose(fp);
+
     shutdown(dS, 2);
     pthread_mutex_lock(&mutexThreads);
 
@@ -1106,14 +1164,14 @@ void sigTerm( int code ){
     }
     // free
 
+    free(threadsExec);
+    free(threadsFini);
     for(int i = 0 ; i < n ; i ++){
         free(listeChaines[i].listeClients);
     }
     free(listeChaines);
 
-    free(threadsExec);
-    free(threadsFini);
-
+    
     shutdown(dSMsg, 2) ;
     shutdown(dSFile, 2) ;
 
@@ -1122,7 +1180,7 @@ void sigTerm( int code ){
 
 int main(int argc, char *argv[]) {
 
-    if(argc != 3){
+    if(argc != 4){
         printf("\033[31mMauvais nombre d'arguments\033[00m\n");
         exit(1);
     }
@@ -1161,7 +1219,7 @@ int main(int argc, char *argv[]) {
         int m;
         char * desc;
         char data[MSGSIZE];
-        while(fgets(data, sizeof(data), fp)!= NULL){
+        while(fgets(data, sizeof(data), fp)!= NULL && nChaines<n){
             nomChaine = strtok(data,";");
             m = atoi(strtok(NULL, ";"));
             desc = strtok(NULL, ";");
@@ -1186,10 +1244,10 @@ int main(int argc, char *argv[]) {
     printf("\033[33mAttente de clients...\033[00m\n");
 
     /*initialisation du semaphore declaré en global*/
-    sem_init(&semaphore, PTHREAD_PROCESS_SHARED, atoi(argv[2]));
+    sem_init(&semaphore, PTHREAD_PROCESS_SHARED, atoi(argv[3]));
 
     /*initialisation du semaphore pour le transfert de fichier*/
-    sem_init(&semaphoreFile, PTHREAD_PROCESS_SHARED, atoi(argv[2]));
+    sem_init(&semaphoreFile, PTHREAD_PROCESS_SHARED, atoi(argv[3]));
 
     // lancement du serveur
     struct infoClients* info;

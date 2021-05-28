@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['saisipseudo_73',['saisiPseudo',['../client_8c.html#a5b4339bebbf64a540e3303b0a6f74429',1,'client.c']]],
-  ['sendfile_74',['sendFile',['../files_8h.html#ad87176c8ab5b4be3088c89b85920aba5',1,'files.h']]],
-  ['sigterm_75',['sigTerm',['../serveur_8c.html#a2ed112523769b21d29372a7e38a62c23',1,'serveur.c']]],
-  ['strcmpupper_76',['strcmpUpper',['../serveur_8c.html#adcd14443c9724333c1329fd9232c497a',1,'serveur.c']]]
+  ['reception_72',['reception',['../client_8c.html#abe9f8424a2fe2b690dfc51c550fd5e61',1,'client.c']]],
+  ['receptionfichier_73',['receptionFichier',['../serveur_8c.html#a2206f9e272f9cce931f1e6122a90aaba',1,'serveur.c']]],
+  ['relayagemessage_74',['relayageMessage',['../serveur_8c.html#ac611d16f5273094fd610be6b10567b25',1,'serveur.c']]]
 ];

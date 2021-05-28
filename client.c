@@ -3,7 +3,7 @@
  * \brief Programme du client
  * \author 
  * \version 0.1
- * \date 24 Mai 2021
+ * \date 21 Mai 2021
  *
  * Programme du client
  *
@@ -95,8 +95,8 @@ void *transfert(void *s){
         send(dS, nomFic, MSGSIZE, 0);
         sendFile(fp, dS);
         puts("Fichier envoyé avec succès");
+         fclose(fp);
     }
-    fclose(fp);
     shutdown(dS, 2);
     pthread_exit(0);
 }
@@ -138,10 +138,9 @@ void *telecharger(void *s){
         puts("Problème fichier");
     }else{
         getFile(fp, dS);
-
         puts("Fichier téléchargé avec succès");
+        fclose(fp);
     }
-    fclose(fp);
 
     shutdown(dS, 2);
     pthread_exit(0);
@@ -181,33 +180,36 @@ void *emission(void *s){
                 t = malloc(sizeof(struct transfert));
                 (*t).dS = dSFile;
                 pthread_t threadFile;
-                if(strcmp(strToken,"list")==0){ //si le client demande une liste des fichiers
+                if(strToken != NULL){
+                    if(strcmp(strToken,"list")==0){ //si le client demande une liste des fichiers
 
-                    id=1; // Permet au serveur de savoir qu'on veut une liste de fichiers
-                    send(dSFile, &id, sizeof(id), 0);
+                        id=1; // Permet au serveur de savoir qu'on veut une liste de fichiers
+                        send(dSFile, &id, sizeof(id), 0);
 
-                    pthread_create(&threadFile, NULL, demandeListeFic, (void *) dSFile);
+                        pthread_create(&threadFile, NULL, demandeListeFic, (void *) dSFile);
 
-                }else if(strcmp(strToken,"get")==0){
-                    strToken = strtok (NULL, " " ); //nomFichier à telecharger
-                    (*t).nomFic = malloc(sizeof(strToken));
-                    strcpy((*t).nomFic, strToken);
+                    }else if(strcmp(strToken,"get")==0){
+                        strToken = strtok (NULL, " " ); //nomFichier à telecharger
+                        if(strToken != NULL){
+                            (*t).nomFic = malloc(sizeof(strToken));
+                            strcpy((*t).nomFic, strToken);
 
-                    id=2; // Permet au serveur de savoir qu'on veut un fichier
-                    send(dSFile, &id, sizeof(id), 0);
+                            id=2; // Permet au serveur de savoir qu'on veut un fichier
+                            send(dSFile, &id, sizeof(id), 0);
+                            pthread_create(&threadFile, NULL, telecharger, (void *) t );
+                        }
+                    }
+                    else{
+                        (*t).nomFic = malloc(sizeof(strToken));
+                        strcpy((*t).nomFic, strToken);
+                        // lire le fichier
 
-                    pthread_create(&threadFile, NULL, telecharger, (void *) t );
-                }
-                else{
-                    (*t).nomFic = malloc(sizeof(strToken));
-                    strcpy((*t).nomFic, strToken);
-                    // lire le fichier
 
+                        id=0; // Permet au serveur de savoir qu'on envoie un fichier
+                        send(dSFile, &id, sizeof(id), 0);
 
-                    id=0; // Permet au serveur de savoir qu'on envoie un fichier
-                    send(dSFile, &id, sizeof(id), 0);
-
-                    pthread_create(&threadFile, NULL, transfert, (void *) t );
+                        pthread_create(&threadFile, NULL, transfert, (void *) t );
+                    }
                 }
                 pthread_join(threadFile, NULL);
                 free(t);
@@ -245,33 +247,10 @@ void *reception(void *s){
 }
 
 /**
-  * @brief Procédure demandant au client un pseudo et le faisant vérifier au serveur
+  * @brief Procédure demandant au client un pseudo et un mot de passe et le faisant vérifier au serveur
   *
   * @param dS Descripteur de la socket du serveur
 */
-void saisiPseudo(int dS){
-    int reponse = 1;
-    char pseudo[20];
-    while(reponse == 1){
-        printf("\033[36mVeuillez saisir votre pseudo :\033[00m\n");
-        fgets(pseudo,20,stdin);
-        char *pos = strchr(pseudo, '\n');
-        *pos = '\0';
-        if(send(dS, pseudo, sizeof(pseudo), 0) <= 0){
-            /*envoi du pseudo au serveur*/
-            perror("Erreur send pseudo");
-            exit(1);
-        }
-        if(recv(dS, &reponse, sizeof(reponse), 0) <= 0 ){
-            perror("Erreur recv pseudo");
-            exit(1);
-        }
-
-        if(reponse == 1) printf("\033[31mPseudo refusé par le serveur\033[00m\n");
-
-    }
-    printf("033[33mWelcome\033[00m %s\n", pseudo);
-}
 
 void saisiCompte(int dS){
     int reponse = 1;
@@ -282,11 +261,11 @@ void saisiCompte(int dS){
         printf("\033[36mVeuillez saisir votre pseudo :\033[00m\n");
         fgets(pseudo,20,stdin);
         char *pos = strchr(pseudo, '\n');
-        *pos = '\0';
+        if(pos != NULL) *pos = '\0';
         printf("\033[36mVeuillez saisir votre mot de passe :\033[00m\n");
         fgets(mdp, 20, stdin);
         pos = strchr(mdp, '\n');
-        *pos = '\0';
+        if(pos != NULL) *pos = '\0';
         if(send(dS, pseudo, sizeof(pseudo), 0) <= 0){
             /*envoi du pseudo au serveur*/
             perror("Erreur send pseudo");
@@ -305,6 +284,7 @@ void saisiCompte(int dS){
         if(reponse == 1) printf("\033[31mIdentifiants refusés par le serveur\033[00m\n");
 
     }
+    printf(" ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄            ▄    ▄ \n▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌     ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌          ▐░▌  ▐░▌\n ▀▀▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀▀▀       ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌▐░▌          ▐░▌ ▐░▌ \n          ▐░▌▐░▌       ▐░▌▐░▌                    ▐░▌     ▐░▌       ▐░▌▐░▌          ▐░▌▐░▌  \n ▄▄▄▄▄▄▄▄▄█░▌▐░█▄▄▄▄▄▄▄█░▌▐░▌                    ▐░▌     ▐░█▄▄▄▄▄▄▄█░▌▐░▌          ▐░▌░▌   \n▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌                    ▐░▌     ▐░░░░░░░░░░░▌▐░▌          ▐░░▌    \n▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌▐░▌                    ▐░▌     ▐░█▀▀▀▀▀▀▀█░▌▐░▌          ▐░▌░▌   \n▐░▌          ▐░▌       ▐░▌▐░▌                    ▐░▌     ▐░▌       ▐░▌▐░▌          ▐░▌▐░▌  \n▐░█▄▄▄▄▄▄▄▄▄ ▐░▌       ▐░▌▐░█▄▄▄▄▄▄▄▄▄           ▐░▌     ▐░▌       ▐░▌▐░█▄▄▄▄▄▄▄▄▄ ▐░▌ ▐░▌ \n▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░░░░░░░░░░░▌          ▐░▌     ▐░▌       ▐░▌▐░░░░░░░░░░░▌▐░▌  ▐░▌\n ▀▀▀▀▀▀▀▀▀▀▀  ▀         ▀  ▀▀▀▀▀▀▀▀▀▀▀            ▀       ▀         ▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀    ▀ \n");
     printf("\033[32mWelcome\033[33m %s\033[00m\n", pseudo);
 }
 

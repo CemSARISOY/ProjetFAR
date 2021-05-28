@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Projet FAR: Référence du fichier client.c</title>
+<title>ZAC Talk: Référence du fichier client.c</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Projet FAR
+   <div id="projectname">ZAC Talk
    </div>
    <div id="projectbrief">Projet réalisé par Zahra AHLAL, Afaf BENTOUIL, Cem SARISOY</div>
   </td>
@@ -124,11 +124,8 @@ Fonctions</h2></td></tr>
 <tr class="memitem:abe9f8424a2fe2b690dfc51c550fd5e61"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client_8c.html#abe9f8424a2fe2b690dfc51c550fd5e61">reception</a> (void *s)</td></tr>
 <tr class="memdesc:abe9f8424a2fe2b690dfc51c550fd5e61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procédure du thread permettant à la réception d'un message du serveur.  <a href="client_8c.html#abe9f8424a2fe2b690dfc51c550fd5e61">Plus de détails...</a><br /></td></tr>
 <tr class="separator:abe9f8424a2fe2b690dfc51c550fd5e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b4339bebbf64a540e3303b0a6f74429"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client_8c.html#a5b4339bebbf64a540e3303b0a6f74429">saisiPseudo</a> (int dS)</td></tr>
-<tr class="memdesc:a5b4339bebbf64a540e3303b0a6f74429"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procédure demandant au client un pseudo et le faisant vérifier au serveur.  <a href="client_8c.html#a5b4339bebbf64a540e3303b0a6f74429">Plus de détails...</a><br /></td></tr>
-<tr class="separator:a5b4339bebbf64a540e3303b0a6f74429"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab488c862e919ac2c2da804228424e7bc"><td class="memItemLeft" align="right" valign="top"><a id="ab488c862e919ac2c2da804228424e7bc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>saisiCompte</b> (int dS)</td></tr>
+<tr class="memitem:ab488c862e919ac2c2da804228424e7bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client_8c.html#ab488c862e919ac2c2da804228424e7bc">saisiCompte</a> (int dS)</td></tr>
+<tr class="memdesc:ab488c862e919ac2c2da804228424e7bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procédure demandant au client un pseudo et un mot de passe et le faisant vérifier au serveur.  <a href="client_8c.html#ab488c862e919ac2c2da804228424e7bc">Plus de détails...</a><br /></td></tr>
 <tr class="separator:ab488c862e919ac2c2da804228424e7bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top"><a id="a0ddf1224851353fc92bfbff6f499fa97"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, char *argv[])</td></tr>
@@ -138,7 +135,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, ch
 <div class="textblock"><p>Programme du client. </p>
 <dl class="section author"><dt>Auteur</dt><dd></dd></dl>
 <dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>24 Mai 2021</dd></dl>
+<dl class="section date"><dt>Date</dt><dd>21 Mai 2021</dd></dl>
 <p>Programme du client </p>
 </div><h2 class="groupheader">Documentation des fonctions</h2>
 <a id="a87e616aeb2171ddc3a37e9ea04c4e475"></a>
@@ -252,14 +249,14 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, ch
 
 </div>
 </div>
-<a id="a5b4339bebbf64a540e3303b0a6f74429"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b4339bebbf64a540e3303b0a6f74429">&#9670;&nbsp;</a></span>saisiPseudo()</h2>
+<a id="ab488c862e919ac2c2da804228424e7bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab488c862e919ac2c2da804228424e7bc">&#9670;&nbsp;</a></span>saisiCompte()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void saisiPseudo </td>
+          <td class="memname">void saisiCompte </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>dS</em></td><td>)</td>
@@ -268,7 +265,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, ch
       </table>
 </div><div class="memdoc">
 
-<p>Procédure demandant au client un pseudo et le faisant vérifier au serveur. </p>
+<p>Procédure demandant au client un pseudo et un mot de passe et le faisant vérifier au serveur. </p>
 <dl class="params"><dt>Paramètres</dt><dd>
   <table class="params">
     <tr><td class="paramname">dS</td><td>Descripteur de la socket du serveur </td></tr>

@@ -49,6 +49,8 @@ void \mbox{\hyperlink{serveur_8c_a74c254b678eabcbcfaf5a57df0606f11}{deconnexion}
 \begin{DoxyCompactList}\small\item\em procédure déconnectant un client et terminant le thread \end{DoxyCompactList}\item 
 char $\ast$ \mbox{\hyperlink{serveur_8c_adb4f8a90544b91df1c6e02e857883881}{connexion\+Compte}} (int dsC, pthread\+\_\+t thread)
 \begin{DoxyCompactList}\small\item\em Fonction qui connecte le client à son propre compte. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{serveur_8c_a86db96a3733386e3701a7008765f51cb}{has\+Space}} (char $\ast$str)
+\begin{DoxyCompactList}\small\item\em fonction testant si la chaine de caractère possède un espace \end{DoxyCompactList}\item 
 char $\ast$ \mbox{\hyperlink{serveur_8c_a6153524ec511bc497bf39e5684d6d72b}{inscription}} (int dsC, pthread\+\_\+t thread)
 \begin{DoxyCompactList}\small\item\em fonction permettant à un client de s\textquotesingle{}inscrire \end{DoxyCompactList}\item 
 char $\ast$ \mbox{\hyperlink{serveur_8c_af9384bf29c41e7d341ff724d86dbb14c}{uppercase}} (char str\mbox{[}256\mbox{]})
@@ -148,7 +150,7 @@ Programme du serveur.
 0.\+1 
 \end{DoxyVersion}
 \begin{DoxyDate}{Date}
-24 Mai 2021
+21 Mai 2021
 \end{DoxyDate}
 Programme du serveur 
 
@@ -359,6 +361,24 @@ procedure qui cherche la position du client sur le serveur (chaines) grâce à s
 {\em j} & Entier à modifier pour indiquer la position du client dans la chaine \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{serveur_8c_a86db96a3733386e3701a7008765f51cb}\label{serveur_8c_a86db96a3733386e3701a7008765f51cb}} 
+\index{serveur.c@{serveur.c}!hasSpace@{hasSpace}}
+\index{hasSpace@{hasSpace}!serveur.c@{serveur.c}}
+\doxysubsubsection{\texorpdfstring{hasSpace()}{hasSpace()}}
+{\footnotesize\ttfamily int has\+Space (\begin{DoxyParamCaption}\item[{char $\ast$}]{str }\end{DoxyParamCaption})}
+
+
+
+fonction testant si la chaine de caractère possède un espace 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em str} & la chaine de caracter à tester \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+1 si la chaine de caractère possède au moins un espace, 0 sinon 
+\end{DoxyReturn}
 \mbox{\Hypertarget{serveur_8c_a6153524ec511bc497bf39e5684d6d72b}\label{serveur_8c_a6153524ec511bc497bf39e5684d6d72b}} 
 \index{serveur.c@{serveur.c}!inscription@{inscription}}
 \index{inscription@{inscription}!serveur.c@{serveur.c}}
